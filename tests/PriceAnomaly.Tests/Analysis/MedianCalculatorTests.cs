@@ -1,9 +1,17 @@
 using PriceAnomaly.Console.Analysis;
+using Xunit.Abstractions;
 
 namespace PriceAnomaly.Tests.Analysis;
 
 public class MedianCalculatorTests
 {
+    private readonly ITestOutputHelper _output;
+
+    public MedianCalculatorTests(ITestOutputHelper output)
+    {
+        _output = output;
+    }
+
     public static TheoryData<string, decimal[], decimal> MedianCases => new()
     {
         { "odd count", [3m, 1m, 2m], 2m },
@@ -18,6 +26,8 @@ public class MedianCalculatorTests
     [MemberData(nameof(MedianCases))]
     public void Median_ReturnsExpected(string scenario, decimal[] values, decimal expected)
     {
+        _output.WriteLine($"Scenario: {scenario}");
+
         var result = MedianCalculator.Median(values);
 
         Assert.Equal(expected, result);

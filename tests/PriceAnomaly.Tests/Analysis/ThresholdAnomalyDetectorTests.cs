@@ -1,10 +1,18 @@
 using PriceAnomaly.Console.Analysis;
 using PriceAnomaly.Console.Models;
+using Xunit.Abstractions;
 
 namespace PriceAnomaly.Tests.Analysis;
 
 public class ThresholdAnomalyDetectorTests
 {
+    private readonly ITestOutputHelper _output;
+
+    public ThresholdAnomalyDetectorTests(ITestOutputHelper output)
+    {
+        _output = output;
+    }
+
     public static TheoryData<string, decimal, decimal, decimal, bool> FlagCases => new()
     {
         { "more than 20% above", 100m, 121m, 0.20m, true },
@@ -21,6 +29,8 @@ public class ThresholdAnomalyDetectorTests
     [MemberData(nameof(FlagCases))]
     public void Detect_FlagsValue_AsExpected(string scenario, decimal median, decimal value, decimal threshold, bool expected)
     {
+        _output.WriteLine($"Scenario: {scenario}");
+
         var result = ThresholdAnomalyDetector.IsAbnormal(value, median, threshold);
 
         Assert.Equal(expected, result);

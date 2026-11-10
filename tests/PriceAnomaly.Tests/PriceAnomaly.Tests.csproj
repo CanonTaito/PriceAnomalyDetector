@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\src\PriceAnomaly.Console\PriceAnomaly.Console.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\*.csv" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
