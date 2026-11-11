@@ -10,7 +10,7 @@ public class CsvRowReaderTests
     [Fact]
     public void Read_ReturnsDateAndValueRows()
     {
-        var rows = _reader.Read(FixturePath("comm_sample.csv"), "Price SOD").ToList();
+        var rows = _reader.Read(TestFiles.Resolve("comm_sample.csv"), "Price SOD").ToList();
 
         var expected = new List<DataRow>
         {
@@ -27,7 +27,7 @@ public class CsvRowReaderTests
     public void Read_MissingValueColumn_ThrowsInvalidData()
     {
         var exception = Assert.Throws<InvalidDataException>(
-            () => _reader.Read(FixturePath("missing_value_column.csv"), "Price SOD").ToList());
+            () => _reader.Read(TestFiles.Resolve("missing_value_column.csv"), "Price SOD").ToList());
 
         Assert.Contains("Price SOD", exception.Message);
     }
@@ -35,7 +35,7 @@ public class CsvRowReaderTests
     [Fact]
     public void Read_HeaderOnly_ReturnsEmpty()
     {
-        var rows = _reader.Read(FixturePath("header_only.csv"), "Price SOD").ToList();
+        var rows = _reader.Read(TestFiles.Resolve("header_only.csv"), "Price SOD").ToList();
 
         Assert.Empty(rows);
     }
@@ -44,11 +44,6 @@ public class CsvRowReaderTests
     public void Read_EmptyFile_ThrowsInvalidData()
     {
         Assert.Throws<InvalidDataException>(
-            () => _reader.Read(FixturePath("empty.csv"), "Price SOD").ToList());
-    }
-
-    private static string FixturePath(string name)
-    {
-        return Path.Combine(AppContext.BaseDirectory, "TestData", name);
+            () => _reader.Read(TestFiles.Resolve("empty.csv"), "Price SOD").ToList());
     }
 }
