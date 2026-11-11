@@ -34,6 +34,21 @@ public class FileTypeResolverTests
     }
 
     [Fact]
+    public void Resolve_AdditionalDefinition_ResolvesNewFileTypeWithoutCodeChanges()
+    {
+        var resolver = new FileTypeResolver(
+        [
+            .. FileTypeResolver.DefaultDefinitions,
+            new FileTypeDefinition("FX", "fx", "Spot Rate"),
+        ]);
+
+        var definition = resolver.Resolve("fx_01.csv");
+
+        Assert.Equal("FX", definition.Name);
+        Assert.Equal("Spot Rate", definition.ValueColumn);
+    }
+
+    [Fact]
     public void Resolve_UnknownFileName_ThrowsNotSupportedException()
     {
         var exception = Assert.Throws<NotSupportedException>(() => _resolver.Resolve("prices_01.csv"));
