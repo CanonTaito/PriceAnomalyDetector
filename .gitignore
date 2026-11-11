@@ -4,3 +4,6 @@
 *.user
 *.suo
 TestResults/
+
+# Local debug profiles (machine-specific paths)
+launchSettings.json
