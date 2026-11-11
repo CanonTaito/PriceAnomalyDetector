@@ -15,10 +15,10 @@ Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download).
 dotnet run --project src/PriceAnomaly.Console -- data
 ```
 
-Arguments can be any mix of files, directories (all `*.csv` inside) and wildcard patterns:
+Arguments can be any mix of files and directories (all `*.csv` files inside a directory are processed):
 
 ```bash
-dotnet run --project src/PriceAnomaly.Console -- data/comm_01.csv "data/mod_*.csv"
+dotnet run --project src/PriceAnomaly.Console -- data/comm_01.csv data/mod_01.csv
 ```
 
 Output is one line per abnormal value, in the format `{file name} {date} {value} {median value}`:
